@@ -17,7 +17,8 @@ function progreso_instalacion {
     echo "---------------------" >>/root/errores.log>>/root/instalacion.log
     echo "" >>/root/errores.log>>/root/instalacion.log
 }
-function validacion_variable () {
+function validacion_variable ($1) 
+{
     variable_validacion=''
     if $1 != "rootcreado":
     then
@@ -34,6 +35,7 @@ function validacion_variable () {
     else
         variable_validacion='False'
         return variable_validacion
+    fi
 }
 usuario_actual=`whoami`
 variable_ambiente= `echo $var_creacion_root`
