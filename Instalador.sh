@@ -19,8 +19,7 @@ function progreso_instalacion {
 }
 function validacion_variable () 
 {
-    variable_validacion=''
-    if $1 != "rootcreado":
+    if [ -z "$1" ]
     then
         echo "Comienza la instalación"
         echo "Habilitamos el usuario root con password lpr"
@@ -30,22 +29,22 @@ function validacion_variable ()
         saltolinea
         echo "por favor deslogueate y logueate con el usuario: root password: lpr "
         echo "var_creacion_root='rootcreado'" >> ~/.bashrc
-        variable_validacion='True'
-        return variable_validacion
+        var_creacion_root='rootcreado'
+        export var_creacion_root
+        source ~/.bashrcv
+        return 0
     else
-        variable_validacion='False'
-        return variable_validacion
+        return 2
     fi
 }
 usuario_actual=`whoami`
-variable_ambiente= `echo $var_creacion_root`
-validacion_variable ($variable_ambiente)
+variable_ambiente=`echo "$var_creacion_root"`
+validacion_variable `echo "$variable_ambiente"`
 validacion=$?
-if $validacion == 'True':
+if [ $validacion -eq 0 ]
 then
-  exit;
-fi
-elif $usuario_actual == 'root':
+  exit 0
+elif [ $usuario_actual = "root" ]
 then
     echo "Continuamos con la instalación ya que configuramos el usuario root"
     echo "actualizacion sistema" >>/root/errores.log>>/root/instalacion.log
@@ -265,12 +264,12 @@ then
     echo "NOTA: No te olvides que si quieres iniciar las aplicaciones vas a encontrar menu.sh en el escritorio y al iniciar debes usar el usuario:root pass: lpr"
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "----------------------------------------------------------------------------------------------------------------------------"
-    reboot;
+    reboot
 else
     echo "Hola, no estas como usuario root, por lo cual no vamos a poder continuar con la instalación"
     echo "Por favor podrías ubicarte como root y volver iniciarme"
     echo "AYUDA:recuerda que el 'user: root ; password: lpr' "
-    exit;
+    exit 0
 fi
 
 
