@@ -31,7 +31,7 @@ function validacion_variable ()
         echo "var_creacion_root='rootcreado'" >> ~/.bashrc
         var_creacion_root='rootcreado'
         export var_creacion_root
-        source ~/.bashrcv
+        source ~/.bashrc
         return 0
     else
         return 2
