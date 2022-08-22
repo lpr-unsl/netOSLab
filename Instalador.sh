@@ -17,29 +17,43 @@ function progreso_instalacion {
     echo "---------------------" >>/root/errores.log>>/root/instalacion.log
     echo "" >>/root/errores.log>>/root/instalacion.log
 }
-function validacion_variable () 
-{
+function validacion_variable  {
     if [ -z "$1" ]
     then
-        echo "Comienza la instalación"
-        echo "Habilitamos el usuario root con password lpr"
-        echo "Habilitamos el usuario root con password lpr" >>/root/errores.log>>/root/instalacion.log
-        progreso_instalacion
-        echo "root:lpr"|chpasswd 2>>/root/errores.log 1>>/root/instalacion.log
-        saltolinea
-        echo "por favor deslogueate y logueate con el usuario: root password: lpr "
-        echo "var_creacion_root='rootcreado'" >> ~/.bashrc
-        var_creacion_root='rootcreado'
-        export var_creacion_root
-        source ~/.bashrc
-        return 0
+        if [ $usuario != "root" ]
+        then
+            
+            echo "Comienza la instalación"
+            echo "Habilitamos el usuario root con password lpr"
+            echo "root:lpr"|chpasswd
+            echo "--------------------------------------------------------------------"
+            echo "por favor deslogueate y logueate con el usuario: root password: lpr "
+            echo "--------------------------------------------------------------------"
+            sudo echo "rootcreado" > instalacion.txt
+            return 0
+        else
+            echo "Comienza la instalación"
+            echo "Habilitamos el usuario root con password lpr"
+            echo "root:lpr"|chpasswd
+            echo "--------------------------------------------------------------------"
+            echo "por favor deslogueate y logueate con el usuario: root password: lpr "
+            echo "--------------------------------------------------------------------"
+            echo "rootcreado" > /instalacion.txt
+            return 0
+        fi
     else
         return 2
     fi
 }
-usuario_actual=`whoami`
-variable_ambiente=`echo "$var_creacion_root"`
-validacion_variable `echo "$variable_ambiente"`
+usuario_actual=`users`
+if [ $usuario_actual != "root" ]
+then
+    buscar_creacion = `grep -wi rootcreado /instalacion.txt`
+    validacion_variable $buscar_creacion $usuario_actual
+    validacion=$?
+fi
+buscar_creacion = `grep -wi rootcreado /instalacion.txt`
+validacion_variable $buscar_creacion $usuario_actual
 validacion=$?
 if [ $validacion -eq 0 ]
 then
