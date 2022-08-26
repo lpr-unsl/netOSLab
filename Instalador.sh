@@ -7,6 +7,8 @@ echo ""
 echo "-----------------------------"
 echo "-----------------------------"
 echo "Comenzamos con la instalación de los requisitos minimos para LPR"
+echo "----------------------------------------------------------------"
+echo "----------------------------------------------------------------∫"
 function saltolinea {
     for ((i=1; i<3; i++))
     do
@@ -18,9 +20,9 @@ function progreso_instalacion {
     echo "" >>/root/errores.log>>/root/instalacion.log
 }
 function validacion_variable  {
-    if [ -z "$1" ]
+    if [ -z $buscar_creacion ]
     then
-        if [ $usuario != "root" ]
+        if [ $usuario_actual != "root" ]
         then
             
             echo "Comienza la instalación"
@@ -45,14 +47,16 @@ function validacion_variable  {
         return 2
     fi
 }
+touch instalacion.txt
 usuario_actual=`users`
-if [ $usuario_actual != "root" ]
+if [ $usuario_actual = "root" ]
 then
-    buscar_creacion = `grep -wi rootcreado /instalacion.txt`
+    buscar_creacion=`grep -wi rootcreado /instalacion.txt`
+    buscar_creacion=`grep -wi rootcreado /home/*.txt`
     validacion_variable $buscar_creacion $usuario_actual
     validacion=$?
 fi
-buscar_creacion = `grep -wi rootcreado /instalacion.txt`
+buscar_creacion=`grep -wi rootcreado instalacion.txt`
 validacion_variable $buscar_creacion $usuario_actual
 validacion=$?
 if [ $validacion -eq 0 ]
@@ -66,17 +70,12 @@ then
     apt update && apt upgrade -y 2>>/root/errores.log 1>>/root/instalacion.log
     echo "Fin de actualización del sistema"
     saltolinea
-    echo "instalacion de git"
-    echo "instalacion git hub" >>/root/errores.log>>/root/instalacion.log
-    progreso_instalacion
-    apt install git -y  2>>/root/errores.log 1>>/root/instalacion.log
-    saltolinea
     echo "clonamos el repositorio donde se encuentran todas las configuraciones"
-    git clone https://github.com/lpr-unsl/netOSLab.git /root/configuracion_sistema 2>>/root/erroes.log 1>>/root/instalacion.log
+    git clone https://github.com/lpr-unsl/netOSLab.git /root/configuracion_sistema 2>>/root/errores.log 1>>/root/instalacion.log
     echo "comienza la instalación de la interfaz grafica xfce4"
     echo "Instalacion xfce4" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    apt install libxfce4ui-utils xfce4-panel xfdesktop4 xfwm4 xfce4-session xfce4-terminal xfconf -y 2>>/root/errores.log 1>>/root/instalacion.log
+    apt install xfwm4 xfce4-panel xfce4-settings xfce4-session xfce4-terminal xfdesktop4 xfce4-taskmanager tango-icon-theme -y 2>>/root/errores.log 1>>/root/instalacion.log
     echo "Se termino la instalacion xfce4"
     saltolinea
     echo "instalación slim"
@@ -89,19 +88,19 @@ then
     echo "se borra los archivos custom.conf de la carpeta gdm3" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     rm /etc/gdm3/custom.conf 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/Intefaz/custom.conf /etc/gdm3/
+    cp /root/configuracion_sistema/configuracion/Intefaz/custom.conf /etc/gdm3/
     saltolinea
     echo "comprobamos el cambio en gdm3"
     ls /etc/gdm3/
     echo "se borra el archivo gdm-password de la carpeta pam.d" >>/root/errores.log>>/root/instalacion.log
     rm /etc/pam.d/gdm-password 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/Intefaz/gdm-password /etc/pam.d/
+    cp /root/configuracion_sistema/configuracion/Intefaz/gdm-password /etc/pam.d/
     saltolinea
     echo "comprobamos el cambio en pam.d"
     ls /etc/pam.d/
     echo "se borra el archivo lightdm.conf de la carpeta lightdm" >>/root/errores.log>>/root/instalacion.log
     rm /etc/lightdm/lightdm.conf 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/Intefaz/lightdm.conf /etc/lightdm/
+    cp /root/configuracion_sistema/configuracion/Intefaz/lightdm.conf /etc/lightdm/
     saltolinea
     echo "comprobamos el cambio en lightdm"
     ls /etc/lightdm
@@ -113,10 +112,11 @@ then
     saltolinea
     echo "creación archivo docker.list" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" | touch docker.list 2>>/root/errores.log 1>>/root/instalacion.log
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > etc/apt/sources.list.d/docker.list 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-    apt update && apt upgrade -y 2>>/root/errores.log 1>>/root/instalacion.log
+    sleep 3
+    apt-get update -y 2>>/root/errores.log 1>>/root/instalacion.log
     echo "instalación docker" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     apt install docker-ce -y 2>>/root/errores.log 1>>/root/instalacion.log
@@ -183,7 +183,7 @@ then
     saltolinea
     echo "borrado de inet.confg y clonado archivo" >>/root/errores.log>>/root/instalacion.log
     rm /etc/inetd.conf 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/Herramientas/TELNET/inetd.conf /etc/
+    cp /root/configuracion_sistema/configuracion/Herramientas/TELNET/inetd.conf /etc/
     saltolinea
     echo "instalar nfs-kernel-server" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
@@ -195,7 +195,7 @@ then
     saltolinea
     echo "instalar dillo" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    apt install dillo
+    apt install dillo -y
     saltolinea
     echo "instalacion systemback" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
@@ -222,9 +222,11 @@ then
     echo "configuramos ssh para que se pueda loguear como root" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     rm /etc/ssh/sshd_config  2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/Herramientas/SSH/sshd_config /etc/ssh/
+    cp /root/configuracion_sistema/configuracion/Herramientas/SSH/sshd_config /etc/ssh/
     echo "comprobamos que se haya copiado sshd_config y restauramos el servicio"
+    echo "---------------------------------------------------------------------"
     ls -l /etc/ssh/
+    echo "---------------------------------------------------------------------"
     saltolinea
     service ssh restart
     read -p "indique la versión de los contenedores de docker:\n " version_docker
@@ -278,6 +280,7 @@ then
     echo "NOTA: No te olvides que si quieres iniciar las aplicaciones vas a encontrar menu.sh en el escritorio y al iniciar debes usar el usuario:root pass: lpr"
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "----------------------------------------------------------------------------------------------------------------------------"
+    sleep 5
     reboot
 else
     echo "Hola, no estas como usuario root, por lo cual no vamos a poder continuar con la instalación"
