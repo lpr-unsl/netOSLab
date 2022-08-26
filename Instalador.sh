@@ -36,7 +36,7 @@ function validacion_variable  {
         else
             echo "Comienza la instalación"
             echo "Habilitamos el usuario root con password lpr"
-            echo "root:lpr"|chpasswd
+            echo "root:lpr"| sudo chpasswd
             echo "--------------------------------------------------------------------"
             echo "por favor deslogueate y logueate con el usuario: root password: lpr "
             echo "--------------------------------------------------------------------"
@@ -51,8 +51,8 @@ touch instalacion.txt
 usuario_actual=`users`
 if [ $usuario_actual = "root" ]
 then
-    buscar_creacion=`grep -wi rootcreado /instalacion.txt`
-    buscar_creacion=`grep -wi rootcreado /home/*.txt`
+    buscar_creacion=`grep -wiR rootcreado /instalacion.txt`
+    buscar_creacion=`grep -wiR rootcreado /home/`
     validacion_variable $buscar_creacion $usuario_actual
     validacion=$?
 fi
