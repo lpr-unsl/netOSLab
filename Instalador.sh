@@ -27,7 +27,7 @@ function validacion_variable  {
             
             echo "Comienza la instalación"
             echo "Habilitamos el usuario root con password lpr"
-            echo "root:lpr"|chpasswd
+            echo "root:lpr"|  chpasswd
             echo "--------------------------------------------------------------------"
             echo "por favor deslogueate y logueate con el usuario: root password: lpr "
             echo "--------------------------------------------------------------------"
@@ -72,39 +72,17 @@ then
     saltolinea
     echo "clonamos el repositorio donde se encuentran todas las configuraciones"
     git clone https://github.com/lpr-unsl/netOSLab.git /root/configuracion_sistema 2>>/root/errores.log 1>>/root/instalacion.log
+
+
+
     echo "comienza la instalación de la interfaz grafica xfce4"
+    echo "Elegir la opción  realizando y apretar tab + enter para que los instale "
     echo "Instalacion xfce4" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    apt install xfwm4 xfce4-panel xfce4-settings xfce4-session xfce4-terminal xfdesktop4 xfce4-taskmanager tango-icon-theme -y 2>>/root/errores.log 1>>/root/instalacion.log
+    apt install xfce4-panel xfwm4 xfce4-session xfce4-terminal xfdesktop4 lightdm-gtk-greeter  -y 2>>/root/errores.log 1>>/root/instalacion.log
     echo "Se termino la instalacion xfce4"
     saltolinea
-    echo "instalación slim"
-    echo "Elegir la opción lightdm para evitar errores posteriores"
-    echo "instalacion slim">>/root/errores.log>>/root/instalacion.log
-    progreso_instalacion
-    apt install slim
-    apt install
-    echo "se procede a transferir los archivos de configuración para setear el usuario root desde github lpr"
-    echo "se borra los archivos custom.conf de la carpeta gdm3" >>/root/errores.log>>/root/instalacion.log
-    progreso_instalacion
-    rm /etc/gdm3/custom.conf 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/configuracion/Intefaz/custom.conf /etc/gdm3/
-    saltolinea
-    echo "comprobamos el cambio en gdm3"
-    ls /etc/gdm3/
-    echo "se borra el archivo gdm-password de la carpeta pam.d" >>/root/errores.log>>/root/instalacion.log
-    rm /etc/pam.d/gdm-password 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/configuracion/Intefaz/gdm-password /etc/pam.d/
-    saltolinea
-    echo "comprobamos el cambio en pam.d"
-    ls /etc/pam.d/
-    echo "se borra el archivo lightdm.conf de la carpeta lightdm" >>/root/errores.log>>/root/instalacion.log
-    rm /etc/lightdm/lightdm.conf 2>>/root/errores.log 1>>/root/instalacion.log
-    cp /root/configuracion_sistema/configuracion/Intefaz/lightdm.conf /etc/lightdm/
-    saltolinea
-    echo "comprobamos el cambio en lightdm"
-    ls /etc/lightdm
-    saltolinea
+
     echo "Comenzamos con la actualización e instalación minima para LPR"
     echo "actualización dependencias" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
@@ -112,7 +90,7 @@ then
     saltolinea
     echo "creación archivo docker.list" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > etc/apt/sources.list.d/docker.list 2>>/root/errores.log 1>>/root/instalacion.log
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
     sleep 3
@@ -125,25 +103,16 @@ then
     systemctl start docker
     systemctl enable docker
     #Permitiendo el trafico de docker
-    iptables -P input ACCEPT
-    iptables -P forward ACCEPT
-    iptables -P output ACCEPT
+    iptables -P INPUT ACCEPT
+    iptables -P FORWARD ACCEPT
+    iptables -P OUTPUT ACCEPT
     echo "configuracion firewall depués de permitir el trafico"  >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    iptables -L -n -v 2>>/root/errores.log 1>>/root/instalacion.log
-    saltolinea
-    #Ejecución de los archivos 
-    echo "instalar xinit" >>/root/errores.log>>/root/instalacion.log
-    progreso_instalacion
-    apt install xinit -y  2>>/root/errores.log 1>>/root/instalacion.log
+    iptables -L -nv 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     echo "instalar xterm" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     apt install xterm -y 2>>/root/errores.log 1>>/root/instalacion.log
-    saltolinea
-    echo "instalar server utils" >>/root/errores.log>>/root/instalacion.log
-    progreso_instalacion
-    apt-get install x11-xserver-utils -y 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     echo "instalar brigde utils"  >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
@@ -227,9 +196,10 @@ then
     echo "---------------------------------------------------------------------"
     ls -l /etc/ssh/
     echo "---------------------------------------------------------------------"
+    sleep 3
     saltolinea
     service ssh restart
-    read -p "indique la versión de los contenedores de docker:\n " version_docker
+    read -p "indique la versión de los contenedores de docker: " version_docker
     echo "se va a realizar la instalación con la versión mencionada: $version_docker"
     for image in router servidor cliente-cli cliente 
     do
@@ -238,6 +208,9 @@ then
         gzip $image\:$version_docker.tar
         docker rmi sistemasoperativostur/$image:$version_docker
     done
+    sleep 2
+    echo "Procedemos a mover las copias descargadas de docker recientemente a la carpeta Documents"
+    mv ./cliente-cli\:$version_docker.tar.gz ./cliente\:$version_docker.tar.gz ./router\:$version_docker.tar.gz ./servidor\:$version_docker.tar.gz /root/Documents/images
     echo "Se proceso a la finalización de los instalación y LPR sin interfaz gráfica"
     echo "Se procede a la instalación de LPR eliaNS"
     apt update && apt upgrade -y
@@ -266,6 +239,7 @@ then
     echo "Comienza copia SimMemoria">>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     mv /root/configuracion_sistema/MemApplication.jar /root/MemApplication  2>>/root/errores.log 1>>/root/instalacion.log
+    chmod +x /root/MemApplication
     saltolinea
     echo "copiar menu.sh a desktop de root">>/root/errores.log>>/root/instalacion.log
     mv  /root/configuracion_sistema/menu.sh  /root/Desktop
