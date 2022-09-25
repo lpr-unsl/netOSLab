@@ -233,13 +233,14 @@ then
     mkdir /root/SimPlanificador
     mv /root/SimPlanificador_aux/PS.jar /root/SimPlanificador 2>>/root/errores.log 1>>/root/instalacion.log
     mv /root/SimPlanificador_aux/README.md /root/SimPlanificador 2>>/root/errores.log 1>>/root/instalacion.log
+    chmod +x /root/SimPlanificador/PS.jar
     rm -r /root/SimPlanificador_aux
     saltolinea
     echo "Comienza la copia de SimMemoria"
     echo "Comienza copia SimMemoria">>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     mv /root/configuracion_sistema/MemApplication.jar /root/MemApplication  2>>/root/errores.log 1>>/root/instalacion.log
-    chmod +x /root/MemApplication
+    chmod +x /root/MemApplication/MemApplication
     saltolinea
     echo "copiar menu.sh a desktop de root">>/root/errores.log>>/root/instalacion.log
     mv  /root/configuracion_sistema/menu.sh  /root/Desktop
