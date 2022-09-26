@@ -51,7 +51,7 @@ touch instalacion.txt
 usuario_actual=`users`
 if [ $usuario_actual = "root" ]
 then
-    buscar_creacion=`grep -wiR rootcreado /instalacion.txt`
+    buscar_creacion=`grep -wiR rootcreado /./instalacion.txt`
     buscar_creacion=`grep -wiR rootcreado /home/`
     validacion_variable $buscar_creacion $usuario_actual
     validacion=$?
@@ -72,18 +72,23 @@ then
     saltolinea
     echo "clonamos el repositorio donde se encuentran todas las configuraciones"
     git clone https://github.com/lpr-unsl/netOSLab.git /root/configuracion_sistema 2>>/root/errores.log 1>>/root/instalacion.log
-
-
-
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "comienza la instalación de la interfaz grafica xfce4"
-    echo "Elegir la opción  realizando y apretar tab + enter para que los instale "
+    echo "Elegir la opción lightdm, más tab + enter para que se aplique los cambios"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "Instalacion xfce4" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    apt install xfce4-panel xfwm4 xfce4-session xfce4-terminal xfdesktop4 lightdm-gtk-greeter  -y 2>>/root/errores.log 1>>/root/instalacion.log
+    apt install xfce4-panel xfwm4 xfce4-session xfce4-terminal xfdesktop4 lightdm-gtk-greeter -y 2>>/root/errores.log 1>>/root/instalacion.log
     echo "Se termino la instalacion xfce4"
     saltolinea
-
     echo "Comenzamos con la actualización e instalación minima para LPR"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "actualización dependencias" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     apt install apt-transport-https ca-certificates curl software-properties-common -y 2>>/root/errores.log 1>>/root/instalacion.log
@@ -174,19 +179,35 @@ then
     apt install systemback -y 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     echo "Se termino la instalación de las herramientas necesarias para poder tener LPR"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    sleep 3
     echo "realizamos el cambio de zona hoaria"
     cp /usr/share/zoneinfo/America/Mendoza /etc/localtime
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "comienza el clonado de los sistemas"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "copiamos pipework"
     echo "clonación pipework" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
     git clone https://github.com/jpetazzo/pipework.git /usr/local/bin 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "copiamos lpr" 
     echo "clonar lpr" >>/root/errores.log>>/root/instalacion.log
     git clone https://github.com/lpr-unsl/lpr.git /root/Documents 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     apt install net-tools -y 
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "configuramos ssh para que se pueda loguear como root"
     echo "configuramos ssh para que se pueda loguear como root" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
@@ -195,6 +216,7 @@ then
     echo "comprobamos que se haya copiado sshd_config y restauramos el servicio"
     echo "---------------------------------------------------------------------"
     ls -l /etc/ssh/
+    echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     sleep 3
     saltolinea
