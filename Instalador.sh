@@ -27,11 +27,11 @@ function validacion_variable  {
             
             echo "Comienza la instalación"
             echo "Habilitamos el usuario root con password lpr"
-            echo "root:lpr"|  chpasswd
+            echo "root:lpr"|  sudo chpasswd
             echo "--------------------------------------------------------------------"
             echo "por favor deslogueate y logueate con el usuario: root password: lpr "
             echo "--------------------------------------------------------------------"
-            sudo echo "rootcreado" > instalacion.txt
+            sudo echo "rootcreado" > /home/instalacion.txt
             return 0
         else
             echo "Comienza la instalación"
@@ -40,25 +40,28 @@ function validacion_variable  {
             echo "--------------------------------------------------------------------"
             echo "por favor deslogueate y logueate con el usuario: root password: lpr "
             echo "--------------------------------------------------------------------"
-            echo "rootcreado" > /instalacion.txt
+            echo "rootcreado" > /home/instalacion.txt
             return 0
         fi
     else
         return 2
     fi
 }
-touch instalacion.txt
-usuario_actual=`users`
-if [ $usuario_actual = "root" ]
-then
-    buscar_creacion=`grep -wiR rootcreado /./instalacion.txt`
-    buscar_creacion=`grep -wiR rootcreado /home/`
-    validacion_variable $buscar_creacion $usuario_actual
-    validacion=$?
-fi
-buscar_creacion=`grep -wi rootcreado instalacion.txt`
-validacion_variable $buscar_creacion $usuario_actual
-validacion=$?
+function val_create_user_root {
+    usuario_actual=`users`
+    if [ $usuario_actual = "root" ]
+    then
+        touch /home/instalacion.txt
+        buscar_creacion=`grep -wiR rootcreado /home/instalacion.txt`
+        validacion_variable $buscar_creacion $usuario_actual
+        return $?
+    else
+        sudo touch /home/instalacion.txt
+        buscar_creacion=`grep -wi rootcreado /home/instalacion.txt`
+        validacion_variable $buscar_creacion $usuario_actual
+        return $?
+}
+validacion=val_create_user_root
 if [ $validacion -eq 0 ]
 then
   exit 0
@@ -67,7 +70,7 @@ then
     echo "Continuamos con la instalación ya que configuramos el usuario root"
     echo "actualizacion sistema" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    apt update && apt upgrade -y 2>>/root/errores.log 1>>/root/instalacion.log
+    apt update && upgrade -y 2>>/root/errores.log 1>>/root/instalacion.log
     echo "Fin de actualización del sistema"
     saltolinea
     echo "clonamos el repositorio donde se encuentran todas las configuraciones"
@@ -82,7 +85,7 @@ then
     echo "---------------------------------------------------------------------"
     echo "Instalacion xfce4" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    apt install xfce4-panel xfwm4 xfce4-session xfce4-terminal xfdesktop4 lightdm-gtk-greeter -y 2>>/root/errores.log 1>>/root/instalacion.log
+    apt install xfce4-panel xfwm4 xfce4-session xfce4-terminal xfdesktop4 lightdm-gtk-greeter
     echo "Se termino la instalacion xfce4"
     saltolinea
     echo "Comenzamos con la actualización e instalación minima para LPR"
@@ -95,7 +98,8 @@ then
     saltolinea
     echo "creación archivo docker.list" >>/root/errores.log>>/root/instalacion.log
     progreso_instalacion
-    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list 2>>/root/errores.log 1>>/root/instalacion.log
+    touch /etc/apt/sources.list.d/docker.list
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" >> /etc/apt/sources.list.d/docker.list 2>>/root/errores.log 1>>/root/instalacion.log
     saltolinea
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
     sleep 3
