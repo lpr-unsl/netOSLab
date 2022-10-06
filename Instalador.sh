@@ -47,7 +47,7 @@ validacion=$?
 if [ $validacion -eq 0 ]
 then
   exit 0
-elif [ $usuario_actual = "root" ] && [ $varabile -eq 2 ]
+elif [ $usuario_actual = "root" ] && [ $validacion -eq 2 ]
 then
     echo "Continuamos con la instalación ya que configuramos el usuario root"
     echo "actualizacion sistema" 
@@ -258,17 +258,6 @@ then
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
-    echo "Comienza copia SimPlanificador"    
-    
-    git clone https://github.com/lpr-unsl/SimPlanificador.git /root/SimPlanificador_aux 
-    mkdir /root/SimPlanificador
-    mv /root/SimPlanificador_aux/PS.jar /root/SimPlanificador 
-    mv /root/SimPlanificador_aux/README.md /root/SimPlanificador 
-    chmod +x /root/SimPlanificador/PS.jar
-    rm -r /root/SimPlanificador_aux
-    echo "---------------------------------------------------------------------"
-    echo "---------------------------------------------------------------------"
-    echo "---------------------------------------------------------------------"
     echo "Comienza la copia de SimMemoria"
     mv /root/configuracion_sistema/MemApplication.jar /root/MemApplication  
     chmod +x /root/MemApplication/MemApplication
@@ -279,16 +268,28 @@ then
     mv  /root/configuracion_sistema/menu.sh  /root/Desktop/
     chmod +x /root/Desktop/menu.sh
     rm -r /root/configuracion_sistema
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "Comienza copia SimPlanificador"
+    sleep 3
+    git clone https://github.com/lpr-unsl/SimPlanificador.git /root/SimPlanificador_aux 
+    mkdir /root/SimPlanificador
+    mv /root/SimPlanificador_aux/PS.jar /root/SimPlanificador 
+    mv /root/SimPlanificador_aux/README.md /root/SimPlanificador 
+    chmod +x /root/SimPlanificador/PS.jar
+    rm -r /root/SimPlanificador_aux
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "Hemos terminado la instalación y copias de los sistemas"
-    echo "Para ver los logs de la instalación se encuentra en las siguientes carpetas"
-    echo "la ruta es /root/errores.log y /root/instalacion.log"
     echo "Se procede a reiniciar el sistema."
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "NOTA: No te olvides que si quieres iniciar las aplicaciones vas a encontrar menu.sh en el escritorio y al iniciar debes usar el usuario:root pass: lpr"
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "----------------------------------------------------------------------------------------------------------------------------"
-    sleep 5
+    sleep 7
     reboot
 else
     echo "Hola, no estas como usuario root, por lo cual no vamos a poder continuar con la instalación"
