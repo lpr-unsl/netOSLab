@@ -55,39 +55,50 @@ then
     apt update && upgrade -y
     echo "Fin de actualización del sistema"
     echo "clonamos el repositorio donde se encuentran todas las configuraciones"
-    git clone https://github.com/lpr-unsl/netOSLab.git
+    git clone https://github.com/lpr-unsl/netOSLab.git /root/configuracion_sistema/
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "comienza la instalación de la interfaz grafica xfce4"
     echo "Elegir la opción lightdm, más tab + enter para que se aplique los cambios"
+    sleep 3
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "Instalacion xfce4" 
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     apt install xfce4-panel xfwm4 xfce4-session xfce4-terminal xfdesktop4 lightdm-gtk-greeter
-
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "Se termino la instalacion xfce4"
     echo "Comenzamos con la actualización e instalación minima para LPR"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "actualización dependencias" 
+    sleep 2
     
     apt install apt-transport-https ca-certificates curl software-properties-common -y 
-    
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "creación archivo docker.list" 
+    sleep 2
     
     touch /etc/apt/sources.list.d/docker.list
     echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" >> /etc/apt/sources.list.d/docker.list
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-    sleep 3
-
     apt update && apt upgrade -y
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "instalación docker"
+    sleep 2
     
     apt install docker-ce -y 
-    sleep 3
     #poniendo en servicio docker
     systemctl start docker
     systemctl enable docker
@@ -128,6 +139,9 @@ then
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     apt install arping -y 
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "instalar wireshark" 
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
@@ -157,7 +171,13 @@ then
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "instalar telnet"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     apt install telnetd -y 
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
+    echo "---------------------------------------------------------------------"
     echo "borrado de inet.confg y clonado archivo" 
     rm /etc/inetd.conf
     cp /root/configuracion_sistema/configuracion/Herramientas/TELNET/inetd.conf /etc/
@@ -273,12 +293,13 @@ then
     echo "---------------------------------------------------------------------"
     echo "Comienza copia SimPlanificador"
     sleep 3
-    git clone https://github.com/lpr-unsl/SimPlanificador.git /root/SimPlanificador_aux 
-    mkdir /root/SimPlanificador
+    git clone https://github.com/lpr-unsl/SimPlanificador.git /root/SimPlanificador_aux/
+    mkdir /root/SimPlanificador/
     mv /root/SimPlanificador_aux/PS.jar /root/SimPlanificador 
     mv /root/SimPlanificador_aux/README.md /root/SimPlanificador 
     chmod +x /root/SimPlanificador/PS.jar
     rm -r /root/SimPlanificador_aux
+    sleep 3
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
