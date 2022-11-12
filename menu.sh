@@ -1,4 +1,54 @@
 #!/bin/bash
+function inicializar {
+   echo ""
+   echo " Antes de de proceder a la instalación debemos tener un disco de al menos 4GB o 
+         una particion aparte, porque hacemos un borrado y formateo del mismo
+        "
+   echo ""
+   echo -n "Quiere continuar? (S/N)"
+   read continuar
+   if [ $continua != "S" ]
+   then
+      return 3
+   fi
+   echo ""
+   echo "paso a listarte los dispositivo que se encuentran montados: "
+   echo "-----------------------------------------------------"
+   df -h 
+   echo "-----------------------------------------------------"
+   echo "En caso de no estar recuerda de utiliza el comando fdisk -l para ver todas las particiones"
+   echo -n "Quieres Salir ? (S/N)"
+   if [ $continua != "S" ]
+   then
+      return 3
+   fi 
+   echo -n "especifique la version de contenedores de docker que se descargo para su instalacion: "
+   read version_docker
+   echo "Especifique el nombre del dispositivo a utilizar: "
+   read dispositivo
+   montaje = `df -h | egrep $dispositivo`
+   if [ -n "$montaje" ]
+   then
+      unmount $dispositivo
+   fi
+   mkfs.ext4 $dispositivo
+   service docker stop
+   mount $dispositivo /var/lib/docker
+   service docker start
+
+   docker load < /root/Documents/images/servidor:$version.tar.gz
+   echo "listo servidor"
+   docker load < /root/Documents/images/cliente:$version.tar.gz
+   echo "listo cliente"
+   docker load < /root/Documents/images/cliente-cli:$version.tar.gz
+   echo "listo cliente-cli"
+   docker load < /root/Documents/images/router:$version.tar.gz
+   echo "listo router"
+
+   echo ""
+   echo "Se completo la instalacion y los contenedores se encuentran corriendo"
+
+}
 function validacion_instalador {
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
@@ -14,8 +64,12 @@ function validacion_instalador {
     buscar_creacion=`grep -wiR instalacion /home/instalacion.txt`
     if [ -z $buscar_creacion ]
     then
-        echo "instalacion" >> /home/instalacion.txt
-        /root/Documents/inicializar.sh
+        inicializar
+        var=$?
+        if [ $var -ne 3 ]
+        then
+         echo "instalacion" >> /home/instalacion.txt
+        fi 
     else
         echo "Ya se encuentra inicialializado los contenedores de docker, puedes ejecutar los programas"
     fi
@@ -48,7 +102,7 @@ function manejo_practico_sinGUI_lpr {
 }
 function sin_interfaz_lpr {
     echo "-----------------------------------------------------"
-    echo "Bienvenido al programa de LPR -Sin interfaz Grafica"
+    echo "Bienvenido al programa de LPR -Sin interfaz Grafica-"
     echo "-----------------------------------------------------"
     echo "Opcion 1: Ingresar al practico DHCP "
     echo "Opcion 2: Ingresar al practico DNS "
@@ -58,7 +112,7 @@ function sin_interfaz_lpr {
     echo "Opcion 6: Ingresar al practico SMTP"
     echo "Opcion 7: Ingresar al practico SQUID"
     echo "Opcion 8: Ingresar al practico VPN"
-    echo "Opcion 0: Salir de LPR -Sin interfaz Grafica"
+    echo "Opcion 0: Salir de LPR -Sin interfaz Grafica-"
     read opcion
     case $opcion in
         1) manejo_practico_sinGUI_lpr "dhcp"
@@ -86,12 +140,12 @@ function sin_interfaz_lpr {
            sin_interfaz_lpr
         ;;
         0) echo "se procede salir de LPR Sin interfaz"
-           exit
+           menu_general
         ;;
     esac
 
 }
-function menu_general{
+function menu_general {
     echo "#####################################################"
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
@@ -125,7 +179,7 @@ function menu_general{
         2) cd /root/EliaNS/;export CLASSPATH=Simlador.jar:$CLASSPATH;javac visual.java;java visual
            menu_general
         ;;
-        3) java -jar /root/MemApplication/MemApplication.jar
+        3) java -jar /root/SinMemoria/MemApplication.jar
            menu_general
         ;;
         4) java -jar /root/SimPlanificador/PS.jar
