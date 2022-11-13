@@ -1,12 +1,13 @@
 #!/bin/bash
 function inicializar {
    echo ""
-   echo " Antes de de proceder a la instalación debemos tener un disco de al menos 4GB o 
+   echo " 
+         Antes de de proceder a la instalación debemos tener un disco de al menos 4GB o 
          una particion aparte, porque hacemos un borrado y formateo del mismo
         "
    echo ""
    echo -n "Quiere continuar? (S/N)"
-   read continuar
+   read continua
    if [ $continua != "S" ]
    then
       return 3
@@ -16,8 +17,15 @@ function inicializar {
    echo "-----------------------------------------------------"
    df -h 
    echo "-----------------------------------------------------"
-   echo "En caso de no estar recuerda de utiliza el comando fdisk -l para ver todas las particiones"
+   sleep 5
+   echo ""
+   echo "
+         En caso de no estar recuerda de utiliza el comando fdisk -l 
+         para ver todas las particiones
+        "
+   echo ""
    echo -n "Quieres Salir ? (S/N)"
+   read continua
    if [ $continua != "S" ]
    then
       return 3
@@ -61,6 +69,7 @@ function validacion_instalador {
     echo ""
     echo ""
     echo ""
+    sleep 5
     buscar_creacion=`grep -wiR instalacion /home/instalacion.txt`
     if [ -z $buscar_creacion ]
     then
@@ -71,7 +80,12 @@ function validacion_instalador {
          echo "instalacion" >> /home/instalacion.txt
         fi 
     else
-        echo "Ya se encuentra inicialializado los contenedores de docker, puedes ejecutar los programas"
+         echo ""
+         echo "
+               Ya se encuentra inicialializado los contenedores de docker, 
+               puedes ejecutar los programas
+             "
+         echo ""
     fi
 }
 function manejo_practico_sinGUI_lpr {
@@ -155,11 +169,11 @@ function menu_general {
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
     echo "Aca se podra acceder a la distintas aplicaciones creadas" 
-    echo "dentro de la Universidad Nacional de San Luis (UNSL)"
+    echo "dentro de la Universidad Nacional de San Luis -UNSL-"
     echo "######################################################"
     echo "Se procede a mostrar el menu"
     echo "Opcion 1: Ingresar a LPR Sin Interfaz grafica"
-    echo "Opcion 2: Ingresar a EliaNS (LPR con intefaz grafica)"
+    echo "Opcion 2: Ingresar a EliaNS -LPR con intefaz grafica-"
     echo "Opcion 3: Ingresar a SimMemoria"
     echo "Opcion 4: Ingresar a SimPlanificador"
     echo "Opcion 0: Salir de LPR Integrado V1.0"

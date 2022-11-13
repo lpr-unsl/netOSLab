@@ -384,9 +384,10 @@ then
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
-    mv  /root/configuracion_sistema/menu.sh /root/Desktop/
+    mkdir /root/MenuAplicacion/
+    mv  /root/configuracion_sistema/menu.sh /root/MenuAplicacion/
     sleep 3
-    chmod +x /root/Desktop/menu.sh
+    chmod +x /root/MenuAplicacion/menu.sh
     rm -r /root/configuracion_sistema
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
@@ -409,7 +410,7 @@ then
     echo "Se procede a reiniciar el sistema."
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "----------------------------------------------------------------------------------------------------------------------------"
-    echo "NOTA: No te olvides que si quieres iniciar las aplicaciones vas a encontrar menu.sh en el escritorio y al iniciar debes usar el usuario:root pass: lpr"
+    echo "NOTA: No te olvides que si quieres iniciar las aplicaciones vas a encontrar menu.sh en la carpeta de /root/MenuAplicacion y al iniciar debes usar el usuario:root pass: lpr"
     echo "----------------------------------------------------------------------------------------------------------------------------"
     echo "----------------------------------------------------------------------------------------------------------------------------"
     sleep 7
