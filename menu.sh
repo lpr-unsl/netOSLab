@@ -1,5 +1,6 @@
 #!/bin/bash
 function inicializar {
+   clear
    echo ""
    echo " 
          Antes de de proceder a la instalación debemos tener un disco de al menos 4GB o 
@@ -34,7 +35,7 @@ function inicializar {
    read version_docker
    echo "Especifique el nombre del dispositivo a utilizar: "
    read dispositivo
-   montaje = `df -h | egrep $dispositivo`
+   montaje=`df -h | egrep $dispositivo`
    if [ -n "$montaje" ]
    then
       unmount $dispositivo
@@ -44,20 +45,25 @@ function inicializar {
    mount $dispositivo /var/lib/docker
    service docker start
 
-   docker load < /root/Documents/images/servidor:$version.tar.gz
+   docker load < /root/Documents/images/servidor:$version_docker.tar.gz
+   docker tag /sistemasoperativostur/servidor:$version_docker servidor:$version_docker
    echo "listo servidor"
-   docker load < /root/Documents/images/cliente:$version.tar.gz
+   docker load < /root/Documents/images/cliente:$version_docker.tar.gz
+   docker tag /sistemasoperativostur/cliente:$version_docker cliente:$version_docker
    echo "listo cliente"
-   docker load < /root/Documents/images/cliente-cli:$version.tar.gz
+   docker load < /root/Documents/images/cliente-cli:$version_docker.tar.gz
+   docker tag /sistemasoperativostur/cliente-cli:$version_docker cliente-cli:$version_docker
    echo "listo cliente-cli"
-   docker load < /root/Documents/images/router:$version.tar.gz
+   docker load < /root/Documents/images/router:$version_docker.tar.gz
+   docker tag /sistemasoperativostur/router:$version_docker router:$version_docker
    echo "listo router"
-
+   echo "$dispositivo" >> /home/instalacion.txt
    echo ""
    echo "Se completo la instalacion y los contenedores se encuentran corriendo"
 
 }
 function validacion_instalador {
+    clear
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
     echo ""
@@ -89,19 +95,28 @@ function validacion_instalador {
     fi
 }
 function manejo_practico_sinGUI_lpr {
+    clear
     practico=$1
     echo "-----------------------------------------------------"
     echo "Bienvenido al practico $1"
     echo "-----------------------------------------------------"
     echo "Se procede abrir el practico"
+    dispositivo=`tail -n1 /home/instalacion.txt`
     sleep 3
-    /root/Documents/ssor/$1/iniciar.sh
+    /root/Documents/ssor/$1/iniciar.sh $dispositivo
+    clear
     echo "Elige la opcion que corresponda"
     echo "Opcion 1: Terminar el practico $1"
     echo "Opcion 2: Pausar el practico $1"
     echo "Opcion 3: Exportar el practico $1"
     echo "Opcion 4: Importar el practico $1"
     read opciones
+    until [ $opcion -le 4 ] && [ $opcion -ge 1 ]
+    do
+        clear 
+        echo "Opcion incorrecta, por favor Ingrese una opción valida"
+        read opcion
+    done
     case $opciones in
         1) /root/Documents/ssor/$1/terminar.sh
         ;;
@@ -115,6 +130,7 @@ function manejo_practico_sinGUI_lpr {
 
 }
 function sin_interfaz_lpr {
+    clear
     echo "-----------------------------------------------------"
     echo "Bienvenido al programa de LPR -Sin interfaz Grafica-"
     echo "-----------------------------------------------------"
@@ -160,6 +176,7 @@ function sin_interfaz_lpr {
 
 }
 function menu_general {
+    clear
     echo "#####################################################"
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"

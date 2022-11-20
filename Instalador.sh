@@ -334,8 +334,14 @@ then
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
-    mkdir /root/Documents/images
-    mv ./cliente-cli\:$version_docker.tar.gz ./cliente\:$version_docker.tar.gz ./router\:$version_docker.tar.gz ./servidor\:$version_docker.tar.gz /root/Documents/images/
+    mkdir /root/Documents/images/
+    mv ./cliente-cli\:$version_docker.tar.gz /root/Documents/images/
+    mv ./cliente\:$version_docker.tar.gz /root/Documents/images/
+    mv ./router\:$version_docker.tar.gz /root/Documents/images/
+    mv ./servidor\:$version_docker.tar.gz /root/Documents/images/
+
+    sleep 5
+    echo $version_docker >/root/Documents/version.txt
     echo "Se proceso a la finalización de los instalación y LPR sin interfaz gráfica"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
