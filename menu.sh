@@ -67,11 +67,14 @@ function validacion_instalador {
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
     echo ""
-    echo "Bienvenidos a LPR Integrado V1.0"
+    echo "  INSTALADOR APULV 1.0
+        Aplicaciones Unificadas Laboratorio 
+        Version 1.0
+     "
     echo ""
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
-    echo "Validamos si los contenedores de docker estan levantados"
+    echo "Validamos si los contenedores de docker estan levantados ee instalados"
     echo ""
     echo ""
     echo ""
@@ -88,10 +91,10 @@ function validacion_instalador {
     else
          echo ""
          echo "
-               Ya se encuentra inicialializado los contenedores de docker, 
-               puedes ejecutar los programas
+               Ya se encuentra instalado los instaladores de docker, puedes proceder a utilizar los programas
              "
          echo ""
+         sleep 3
     fi
 }
 function manejo_practico_sinGUI_lpr {
@@ -210,13 +213,13 @@ function menu_general {
         2) cd /root/EliaNS/;export CLASSPATH=Simlador.jar:$CLASSPATH;javac visual.java;java visual
            menu_general
         ;;
-        3) cd /root/MMemAplicationPro; java -jar MemApplication.jar
+        3) cd /root/MMemAplicationPro/dist; java -jar MemApplication.jar
            menu_general
         ;;
         4) java -jar /root/SimPlanificador/PS.jar
            menu_general
         ;;
-        0) echo "se procede salir de LPR Integrado V1.0"
+        0) echo "se procede salir de APULV 1.0"
         exit
         ;;
     esac
