@@ -181,7 +181,7 @@ function menu_general {
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
     echo ""
-    echo "Bienvenidos a LPR Integrado V1.0"
+    echo "Bienvenidos a APULV 1.0"
     echo ""
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
@@ -193,7 +193,7 @@ function menu_general {
     echo "Opcion 2: Ingresar a EliaNS -LPR con intefaz grafica-"
     echo "Opcion 3: Ingresar a SimMemoria"
     echo "Opcion 4: Ingresar a SimPlanificador"
-    echo "Opcion 0: Salir de LPR Integrado V1.0"
+    echo "Opcion 0: Salir de APULV 1.0"
     echo ""
     echo ""
     echo "Por favor ingrese la opción que quiere"
@@ -210,7 +210,7 @@ function menu_general {
         2) cd /root/EliaNS/;export CLASSPATH=Simlador.jar:$CLASSPATH;javac visual.java;java visual
            menu_general
         ;;
-        3) java -jar /root/SinMemoria/MemApplication.jar
+        3) cd /root/MMemAplicationPro; java -jar MemApplication.jar
            menu_general
         ;;
         4) java -jar /root/SimPlanificador/PS.jar

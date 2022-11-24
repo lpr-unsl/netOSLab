@@ -2,7 +2,10 @@
 echo "----------------------------------------------------------------"
 echo "----------------------------------------------------------------"
 echo ""
-echo "INSTALADOR LPR INTEGRADO V1.0"
+echo "  INSTALADOR APULV 1.0
+        Aplicaciones Unificadas Laboratorio 
+        Version 1.0
+     "
 echo ""
 echo "----------------------------------------------------------------"
 echo "----------------------------------------------------------------"
@@ -379,9 +382,8 @@ then
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
-    mkdir /root/SinMemoria/
-    mv /root/configuracion_sistema/MemApplication.jar /root/SinMemoria
-    chmod +x /root/SinMemoria/MemApplication.jar
+    mv /root/configuracion_sistema/MMemAplicationPro /root
+    chmod +x /root/MMemAplicationPro/MemApplication.jar
     sleep 3
     echo "---------------------------------------------------------------------"
     echo "---------------------------------------------------------------------"
