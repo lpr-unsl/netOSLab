@@ -67,7 +67,7 @@ function validacion_instalador {
     echo "-----------------------------------------------------"
     echo "-----------------------------------------------------"
     echo ""
-    echo "  INSTALADOR APULV 1.0
+    echo "  INSTALADOR APUL V1.0
         Aplicaciones Unificadas Laboratorio 
         Version 1.0
      "
@@ -134,9 +134,9 @@ function manejo_practico_sinGUI_lpr {
 }
 function sin_interfaz_lpr {
     clear
-    echo "-----------------------------------------------------"
-    echo "Bienvenido al programa de LPR -Sin interfaz Grafica-"
-    echo "-----------------------------------------------------"
+    echo "-----------------------------------------------------------"
+    echo "Bienvenido al programa de LPR (Laboratorio Portatil Redes)"
+    echo "-----------------------------------------------------------"
     echo "Opcion 1: Ingresar al practico DHCP "
     echo "Opcion 2: Ingresar al practico DNS "
     echo "Opcion 3: Ingresar al practico FIREWALL"
@@ -172,7 +172,7 @@ function sin_interfaz_lpr {
         8) manejo_practico_sinGUI_lpr "vpn"
            sin_interfaz_lpr
         ;;
-        0) echo "se procede salir de LPR Sin interfaz"
+        0) echo "se procede salir de LPR"
            menu_general
         ;;
     esac
@@ -180,23 +180,23 @@ function sin_interfaz_lpr {
 }
 function menu_general {
     clear
-    echo "#####################################################"
-    echo "-----------------------------------------------------"
-    echo "-----------------------------------------------------"
+    echo "########################################################################"
+    echo "------------------------------------------------------------------------"
+    echo "------------------------------------------------------------------------"
     echo ""
-    echo "Bienvenidos a APULV 1.0"
+    echo "Bienvenidos a APUL V1.0"
     echo ""
-    echo "-----------------------------------------------------"
-    echo "-----------------------------------------------------"
+    echo "------------------------------------------------------------------------"
+    echo "------------------------------------------------------------------------"
     echo "Aca se podra acceder a la distintas aplicaciones creadas" 
     echo "dentro de la Universidad Nacional de San Luis -UNSL-"
-    echo "######################################################"
+    echo "########################################################################"
     echo "Se procede a mostrar el menu"
-    echo "Opcion 1: Ingresar a LPR Sin Interfaz grafica"
-    echo "Opcion 2: Ingresar a EliaNS -LPR con intefaz grafica-"
-    echo "Opcion 3: Ingresar a SimMemoria"
-    echo "Opcion 4: Ingresar a SimPlanificador"
-    echo "Opcion 0: Salir de APULV 1.0"
+    echo "Opcion 1: Ingresar a LPR (Laboratorio Portatil de Redes)"
+    echo "Opcion 2: Ingresar a EliaNS (Diseniador Grafico de Topologias de red)"
+    echo "Opcion 3: Ingresar a SimMemoria (Simulador de Memoria)"
+    echo "Opcion 4: Ingresar a SimPlanificador (Simulacion Planificacion Procesos)"
+    echo "Opcion 0: Salir de APUL V1.0"
     echo ""
     echo ""
     echo "Por favor ingrese la opción que quiere"
@@ -219,7 +219,7 @@ function menu_general {
         4) java -jar /root/SimPlanificador/PS.jar
            menu_general
         ;;
-        0) echo "se procede salir de APULV 1.0"
+        0) echo "se procede salir de APUL V1.0"
         exit
         ;;
     esac
