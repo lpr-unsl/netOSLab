@@ -2,7 +2,7 @@
 echo "----------------------------------------------------------------"
 echo "----------------------------------------------------------------"
 echo ""
-echo "  INSTALADOR APULV 1.0
+echo "  INSTALADOR APUL V1.0
         Aplicaciones Unificadas Laboratorio 
         Version 1.0
      "
