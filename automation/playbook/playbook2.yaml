@@ -1,0 +1,24 @@
+---
+- hosts: myhosts
+  become: yes
+  tasks:
+    - name: Update apt cache and a lot of packages
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - ca-certificates
+        - curl
+          #- Xserver
+        - xfce4
+        - terminator
+        - x11-xserver-utils
+        - bridge-utils
+        - libnet1
+        - arping
+        - wireshark
+        - samba
+        - smbclient
+        - vsftpd
+        - telnetd
+        - firefox-esr
