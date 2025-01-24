@@ -1,3 +1,5 @@
+# Repo intended to launch "base" machine to create netOSLab liveCD images
+
 Repo intended to automate netOSLab operating system and it's updates
 
 Steps:
