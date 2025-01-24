@@ -11,4 +11,4 @@ ansible-inventory -i inventory.ini --list
 ansible myhosts -m ping -i inventory.ini
 
 run 
-ansible-playbook -i inventory/inventory.yaml playbook/playbook2.yaml -u root
+ansible-playbook -ki inventory/inventory.yaml playbook/playbook2.yaml -u root

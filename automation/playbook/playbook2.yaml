@@ -7,18 +7,20 @@
         name: "{{ item }}"
         update_cache: yes
       loop:
-        - ca-certificates
+        #- ca-certificates
         - curl
           #- Xserver
+        - slim
         - xfce4
         - terminator
-        - x11-xserver-utils
+          #- x11-xserver-utils
         - bridge-utils
         - libnet1
         - arping
         - wireshark
         - samba
         - smbclient
+        - neovim
         - vsftpd
         - telnetd
         - firefox-esr
