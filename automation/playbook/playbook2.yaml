@@ -35,6 +35,8 @@
 #      command: install -m 0755 -d /etc/apt/keyrings
 #      #command: curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
 
+    # Docker-ce install documentation
+    # https://docs.docker.com/engine/install/debian/#install-using-the-repository
     - name: create keyring directory
       shell: |
         install -m 0755 -d /etc/apt/keyrings
@@ -48,3 +50,10 @@
         name: docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin
         update_cache: yes
         state: present
+
+    - name: Enable and start docker service
+      ansible.builtin.systemd_service:
+        name: docker
+        state: started
+        enabled: true
+
