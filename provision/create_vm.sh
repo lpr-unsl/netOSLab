@@ -24,9 +24,8 @@ VBoxManage storagectl base --name "Floppy Controller" --add floppy
 
 VBoxManage createhd --filename ./base/base_disk.vdi --size 200000 --format VDI
 VBoxManage storageattach base --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium  ./base/base_disk.vdi
-VBoxManage storageattach base --storagectl "Floppy Controller" --port 0 --device 0 --type fdd --medium ./NewFloppyDisk.img
+#VBoxManage storageattach base --storagectl "Floppy Controller" --port 0 --device 0 --type fdd --medium ./NewFloppyDisk.img
 #VBoxManage storageattach base --storagectl "SATA Controller" --port 0 --device 1 --type hdd --medium  ./preseeded.vdi
 #VBoxManage storageattach base --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium ./debian-12.6.0-amd64-netinst.iso
-VBoxManage storageattach base --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium $IMAGE_NAME
+VBoxManage storageattach base --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium "$IMAGE_NAME"
 
-VBoxManage startvm base --type headless
