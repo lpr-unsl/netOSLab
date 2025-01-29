@@ -50,11 +50,11 @@
         update_cache: yes
         state: present
 
-    - name: Enable and start docker service
-      ansible.builtin.systemd_service:
-        name: docker
-        state: started
-        enabled: true
+#    - name: Enable and start docker service
+#      ansible.builtin.systemd_service:
+#        name: docker
+#        state: started
+#        enabled: true
 
     - name: install Systemback package 
       shell: | 

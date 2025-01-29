@@ -49,6 +49,16 @@
           dest: /root/Documents/SimMemoria
         - repo: https://github.com/lpr-unsl/SimPlanificador.git
           dest: /root/Documents/SimPlanificador
+    
+    - name: Stop and Disable vsftpd service
+      ansible.builtin.systemd_service:
+        name: "{{ item.service }}"
+        state: stopped
+        enabled: false
+      loop:
+        - service: vsftpd
+        - service: smbd
+        - service: docker
 
     - name: Unconditionally reboot the machine with new configuration
       ansible.builtin.reboot:
