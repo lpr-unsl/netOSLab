@@ -68,7 +68,7 @@
         - service: docker
 
     - name: Write netOslab tag in a version file
-      ansible.builtin.command: git ls-remote --refs --tags git@github.com:lpr-unsl/netOSLab.git > /root/Documents/netOSLab_version.txt
+      ansible.builtin.shell: git ls-remote --refs --tags https://github.com/lpr-unsl/netOSLab.git > /root/Documents/netOSLab_version.txt
 
     - name: Unconditionally reboot the machine with new configuration
       ansible.builtin.reboot:
