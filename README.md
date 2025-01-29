@@ -23,5 +23,12 @@ Repo intended to automate only netOSLab operating system and it's updates, nor s
 - to set up extra config run:
         -  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-config.yaml
 
-#Restart "base" virtual machine
-- ready to greate a netOSLab image using systemback
+#wait until "base" virtual machine is restarted and log in again
+- ready to create a netOSLab image using systemback
+
+#steps to create netOSLab images
+- Verify netOSLab tag is updated to create new image
+- Launch systemback: -> Applications -> System -> Systemback
+- Select "Live system create"
+- Verify that "Include the user data files" is checked
+- Click on "Create new"

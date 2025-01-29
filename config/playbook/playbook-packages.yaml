@@ -19,6 +19,7 @@
         - libnet1
         - arping
         - wireshark
+        - eog
         - samba
         - smbclient
         - cifs-utils
