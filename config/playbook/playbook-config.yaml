@@ -1,0 +1,54 @@
+---
+- name: configure my netoslab
+  hosts: myhosts
+  become: yes
+  tasks:
+    - name: change hostname
+      ansible.builtin.hostname:
+        name: netOSLab
+
+    - name: set message in slim login screen
+      ansible.builtin.lineinfile:
+        path: /usr/share/slim/themes/debian-softwaves/slim.theme
+        line: "{{ item.line }}"
+        regexp: "{{ item.regexp }}"
+      loop:
+        - line: "password_x 200"
+          regexp: ^password_x
+        - line: "password_y 169"
+          regexp: ^password_y
+        - line: "username_msg Please entre your username (\"root\")"
+          regexp: ^username_msg
+        - line: "password_msg Please entre your password (\"netOSLab\")"
+          regexp: ^password_msg
+
+    - name: Create terminator config directory if it does not exist
+      ansible.builtin.file:
+        path: /root/.config/terminator
+        state: directory
+        mode: '0755'
+
+    - name: set root terminator in green color
+      ansible.builtin.copy:
+        dest: /root/.config/terminator/config
+        src: terminator-config
+        force: no
+
+#    - name: enable server access control program for X from container
+#      ansible.builtin.command:
+#        cmd: xhost +local:docker
+
+    - name: Clone all needed repos
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+      loop:   
+        - repo: https://github.com/lpr-unsl/ssor.git
+          dest: /root/Documents/ssor
+        - repo: https://github.com/lpr-unsl/SimMemoria.git
+          dest: /root/Documents/SimMemoria
+        - repo: https://github.com/lpr-unsl/SimPlanificador.git
+          dest: /root/Documents/SimPlanificador
+
+    - name: Unconditionally reboot the machine with new configuration
+      ansible.builtin.reboot:

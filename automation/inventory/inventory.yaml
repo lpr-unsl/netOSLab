@@ -1,4 +1,0 @@
-myhosts:
-  hosts:
-    netOSLab:
-      ansible_host: 192.168.68.58

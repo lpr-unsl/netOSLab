@@ -1,16 +1,27 @@
-# Repo intended to launch "base" machine to create netOSLab liveCD images
+# Repo intended to launch "base" machine, in order to create netOSLab liveCD images from it
 
-Repo intended to automate netOSLab operating system and it's updates
+Repo intended to automate only netOSLab operating system and it's updates, nor ssor, nor SimMemoria, nor SimPlanificador, nor any other software.
 
-Steps:
-#copy public key from Control node to Managed node
-ssh-copy-id  same_user@192.168.68.54 
+#Requirements:
+- VirtualBox 7.0 or higher installed on the machine that will run the automation
+- ansible 2.14 or higher installed on the machine that will run the automation
 
-cd automation
-create inventory.ini file
-ansible-inventory -i inventory.ini --list
-# Managed node needs python installed
-ansible myhosts -m ping -i inventory.ini
+#steps to create infrastructures:
+- git clone this_repo
+- Download netinst stable debian version (debian-12.6.0-amd64-netinst.iso) from https://www.debian.org/distrib/
+- to create base virtualmachine, run :
+        - bash provision/create_vm.sh "your_phisical_nic_to_reach_internet" "path_to_debian-12.6.0-amd64-netinst.iso"
+- Once created Boot VM and select Advanced options -> Automated install
+- In the "Download debconf preconfiguration file" window enter the following url:
+       - https://raw.githubusercontent.com/lpr-unsl/netOSLab/refs/heads/main/provision/preseed.cfg
+- Once debian installation finished, log in and get ipv4 address
 
-run 
-ansible-playbook -ki inventory/inventory.yaml playbook/playbook2.yaml -u root
+#steps to configure software on "base" machine
+- edit config/inventory/inventory.ini and replace "ansible_host" with yours (previously obtained)
+- to install all needed packages run:
+	-  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-packages.yaml 
+- to set up extra config run:
+        -  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-config.yaml
+
+#Restart "base" virtual machine
+- ready to greate a netOSLab image using systemback

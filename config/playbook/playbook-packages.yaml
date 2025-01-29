@@ -21,19 +21,18 @@
         - wireshark
         - samba
         - smbclient
+        - cifs-utils
         - neovim
         - vsftpd
         - telnetd
         - firefox-esr
+        - nfs-server
+        - git
 
     - name: remove old version of docker
       apt:
         name: docker.io, docker-doc, docker-compose, podman-docker, containerd, runc
         state: absent
-
-#    - name: create keyring directory
-#      command: install -m 0755 -d /etc/apt/keyrings
-#      #command: curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
 
     # Docker-ce install documentation
     # https://docs.docker.com/engine/install/debian/#install-using-the-repository
@@ -56,4 +55,15 @@
         name: docker
         state: started
         enabled: true
+
+    - name: install Systemback package 
+      shell: | 
+        echo "deb [arch=amd64] http://mirrors.bwbot.org/ stable main" > /etc/apt/sources.list.d/systemback.list
+        apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 50B2C005A67B264F
+
+    - name: update cache, install systemback
+      apt:
+        name: systemback
+        update_cache: yes
+        state: present
 
