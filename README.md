@@ -1,6 +1,6 @@
 # Repo intended to launch "netOSBase" machine, in order to create netOSLab liveCD images from it
 
-Repo intended to automate only netOSLab operating system and it's updates, nor ssor, nor SimMemoria, nor SimPlanificador, nor any other software.
+Repo intended to automate only netOSLab operating system and its updates, nor ssor, nor SimMemoria, nor SimPlanificador, nor any other software.
 
 ## Requirements:
 - VirtualBox 7.0 or higher installed on the machine that will run the automation
@@ -14,7 +14,7 @@ Repo intended to automate only netOSLab operating system and it's updates, nor s
 - Download netinst stable debian version (debian-12.6.0-amd64-netinst.iso) from https://www.debian.org/distrib/
 - to create netOSBase virtualmachine, run :
   ```
-  bash provision/create_netOSBase.sh "your_phisical_nic_to_reach_internet" "path_to_debian-12.6.0-amd64-netinst.iso"
+  bash provision/create_netOSBase.sh "your_physical_nic_to_reach_internet" "path_to_debian-12.6.0-amd64-netinst.iso"
   ```
 - Once created, boot netOSBase VM and select Advanced options -> Automated install
 - In the "Download debconf preconfiguration file" window enter the following url:
@@ -36,7 +36,7 @@ Repo intended to automate only netOSLab operating system and it's updates, nor s
         -  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-config.yaml
    ```
 
-## wait until "netOSBase" virtual machine is restarted and log in again (graphically)
+## wait until "netOSBase" virtual machine is restarted and log in again (graphical interface)
 - Only if you need new netOSLab iso features, follow these steps:
   	- If new packages are needed, add them locally in config/playbook/playbook-packages.yaml
  	- If new files/config set up, add them locally config/playbook/playbook-config.yaml
@@ -57,7 +57,7 @@ Repo intended to automate only netOSLab operating system and it's updates, nor s
 - Verify that "Include the user data files" is checked
 - Click on "Create new"
 - A new iso file is created in **/home/systemback_live_date.iso**
-- Renami image name:
+- Rename image name:
   ```
   mv /home/systemback_live_date.iso /home/netOSLab-1.X.X.iso
   ```
@@ -67,7 +67,7 @@ Repo intended to automate only netOSLab operating system and it's updates, nor s
 ```
    scp root@[netOSBase_IP]:/home/netOSLab-1.X.X.iso some/path
 ```
-- Finnaly to create netOSLab virtualmachine in your local machine, and test/use it run :
+- Finally to create netOSLab virtual machine in your local machine, and test/use it run :
   ```
-     bash provision/create_netOSLab.sh "your_phisical_nic_to_reach_internet" "some/path/netOSLab-1.X.X.iso"
+     bash provision/create_netOSLab.sh "your_physical_nic_to_reach_internet" "some/path/netOSLab-1.X.X.iso"
   ```

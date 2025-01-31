@@ -1,7 +1,7 @@
 myhosts:
   hosts:
     netOSLab:
-      ansible_host: 192.168.68.56
+      ansible_host: 192.168.68.79
   vars:
     ansible_user: root
     ansible_ssh_pass: netOSLab
