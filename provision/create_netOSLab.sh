@@ -12,7 +12,7 @@ IMAGE_NAME="$2"
 VBPATH=$HOME"/VirtualBox VMs"
 
 VBoxManage createvm --name netOSLab --ostype "Debian_64" --register --basefolder "$VBPATH"
-VBoxManage modifyvm netOSLab --memory 1024 --vram 128
+VBoxManage modifyvm netOSLab --memory 2048 --vram 128
 VBoxManage modifyvm netOSLab --ioapic on
 VBoxManage modifyvm netOSLab --nic1 bridged --bridgeadapter1 $INTERFACE
 VBoxManage modifyvm netOSLab --graphicscontroller vmsvga
