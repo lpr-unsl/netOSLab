@@ -39,6 +39,12 @@
         dest: /usr/share/systemback/splash.png
         src: splash.png
 
+    - name: change host name in hosts file
+      ansible.builtin.replace:
+        path: /etc/hosts
+        regexp: '(\s+)debian(\s+.*)?$'
+        replace: '\1netoslab netoslab.unsl.edu.ar\2'
+
 #    - name: enable server access control program for X from container
 #      ansible.builtin.command:
 #        cmd: xhost +local:docker
