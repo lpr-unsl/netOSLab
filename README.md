@@ -7,9 +7,9 @@ Repo intended to automate only netOSLab operating system and its updates, nor ss
 - ansible 2.14 or higher installed on the machine that will run the automation
 
 ## steps to create infrastructures:
-```
-   git clone https://github.com/lpr-unsl/netOSLab.git
-```
+  ```
+  git clone https://github.com/lpr-unsl/netOSLab.git
+  ```
 
 - Download netinst stable debian version (debian-12.6.0-amd64-netinst.iso) from https://www.debian.org/distrib/
 - to create netOSBase virtualmachine, run :
@@ -18,22 +18,22 @@ Repo intended to automate only netOSLab operating system and its updates, nor ss
   ```
 - Once created, boot netOSBase VM and select Advanced options -> Automated install
 - In the "Download debconf preconfiguration file" window enter the following url:
-  
+ 
   https://raw.githubusercontent.com/lpr-unsl/netOSLab/refs/heads/main/provision/preseed.cfg
 
 - Once debian installation finished, log in to netOSBase and get ipv4 address by running:
-```
-        ip addr
-```
+  ```
+  ip addr
+  ```
 ## steps to configure software on "netOSBase" machine
 - edit in this repo file **config/inventory/inventory.yaml** and replace **ansible_host** with your own ipv4 address (previously obtained)
 - to install all needed packages run:
-```
-	-  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-packages.yaml
-```
+  ```
+  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-packages.yaml
+  ```
 - to set up extra config run:
    ```
-        -  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-config.yaml
+  ansible-playbook -i config/inventory/inventory.yaml config/playbook/playbook-config.yaml
    ```
 
 ## wait until "netOSBase" virtual machine is restarted and log in again (graphical interface)
@@ -63,11 +63,11 @@ Repo intended to automate only netOSLab operating system and its updates, nor ss
   ```
 
 ## Create a netOSLab machine to test/work
--Go to yout local machine and scp iso form netosBase to it:
-```
-   scp root@[netOSBase_IP]:/home/netOSLab-1.X.X.iso some/path
-```
+- Go to yout local machine and scp iso form netosBase to it:
+  ```
+  scp root@[netOSBase_IP]:/home/netOSLab-1.X.X.iso some/path
+  ```
 - Finally to create netOSLab virtual machine in your local machine, and test/use it run :
   ```
-     bash provision/create_netOSLab.sh "your_physical_nic_to_reach_internet" "some/path/netOSLab-1.X.X.iso"
+  bash provision/create_netOSLab.sh "your_physical_nic_to_reach_internet" "some/path/netOSLab-1.X.X.iso"
   ```
