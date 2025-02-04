@@ -29,6 +29,7 @@
         - firefox-esr
         - nfs-server
         - git
+        - default-jre
 
     - name: remove old version of docker
       apt:
