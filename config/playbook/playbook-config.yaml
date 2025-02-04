@@ -69,7 +69,7 @@
 
     - name: Write netOslab tag in a version file
       ansible.builtin.shell: |
-        git ls-remote --refs --tags https://github.com/lpr-unsl/netOSLab.git > /root/Documents/netOSLab_version.txt
+        git ls-remote --refs --tags https://github.com/lpr-unsl/netOSLab.git | tail -n1 > /root/Documents/netOSLab_version.txt
         git -C /root/Documents/ssor fetch https://github.com/lpr-unsl/netOSLab.git main
         git -C /root/Documents/ssor log --pretty=format:"%h %ad %s %d" --date=short FETCH_HEAD >> /root/Documents/netOSLab_version.txt
 
