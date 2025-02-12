@@ -9,6 +9,7 @@ Repo intended to automate only netOSLab operating system and its updates, nor ss
 ## steps to create infrastructures:
   ```
   git clone https://github.com/lpr-unsl/netOSLab.git
+  cd netOSLab
   ```
 
 - Download netinst stable debian version (debian-12.6.0-amd64-netinst.iso) from https://www.debian.org/distrib/

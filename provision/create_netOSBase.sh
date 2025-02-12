@@ -21,7 +21,7 @@ VBoxManage modifyvm netOSBase --boot1 dvd --boot2 disk --boot3 none --boot4 none
 VBoxManage storagectl netOSBase --name "IDE Controller" --add ide --controller PIIX4
 VBoxManage storagectl netOSBase --name "SATA Controller" --add sata --controller IntelAhci
 
-VBoxManage createhd --filename "$VBPATH"/netOSBase/netOSBase_disk.vdi --size 10000 --format VDI
+VBoxManage createhd --filename "$VBPATH"/netOSBase/netOSBase_disk.vdi --size 12000 --format VDI
 VBoxManage storageattach netOSBase --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$VBPATH"/netOSBase/netOSBase_disk.vdi
 VBoxManage storageattach netOSBase --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium "$IMAGE_NAME"
 
