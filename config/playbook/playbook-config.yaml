@@ -76,8 +76,9 @@
     - name: Write netOslab tag in a version file
       ansible.builtin.shell: |
         git ls-remote --refs --tags https://github.com/lpr-unsl/netOSLab.git | tail -n1 > /root/Documents/netOSLab_version.txt
-        git -C /root/Documents/ssor fetch https://github.com/lpr-unsl/netOSLab.git main
-        git -C /root/Documents/ssor log --pretty=format:"%h %ad %s %d" --date=short FETCH_HEAD >> /root/Documents/netOSLab_version.txt
+        echo "------------------" >> /root/Documents/netOSLab_version.txt
+        git -C /root/Documents/ssor fetch --tags https://github.com/lpr-unsl/netOSLab.git main
+        git -C /root/Documents/ssor log --pretty=format:"%h %ad %d     %s" --date=short FETCH_HEAD >> /root/Documents/netOSLab_version.txt
 
     - name: Unconditionally reboot the machine with new configuration
       ansible.builtin.reboot:
