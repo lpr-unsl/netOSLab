@@ -2,19 +2,18 @@
 
 # Check if exactly two arguments are provided
 if [[ $# -ne 2 ]]; then
-    echo "Usage: $0 <network_interface_name> <path_to_netOSLab_image>"
+    echo "Usage: $0 <path_to_netOSLab_image>"
     exit 1
 fi
 
 # Assign arguments to variables
-INTERFACE="$1"
-IMAGE_NAME="$2"
+IMAGE_NAME="$1"
 VBPATH=$HOME"/VirtualBox VMs"
 
 VBoxManage createvm --name netOSLab --ostype "Debian_64" --register --basefolder "$VBPATH"
 VBoxManage modifyvm netOSLab --memory 2048 --vram 128
 VBoxManage modifyvm netOSLab --ioapic on
-VBoxManage modifyvm netOSLab --nic1 bridged --bridgeadapter1 $INTERFACE
+VBoxManage modifyvm netOSLab --nic1 nat
 VBoxManage modifyvm netOSLab --graphicscontroller vmsvga
 VBoxManage modifyvm netOSLab --boot1 dvd --boot2 disk --boot3 none --boot4 none
 
