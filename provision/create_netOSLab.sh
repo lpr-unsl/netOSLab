@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if exactly two arguments are provided
-if [[ $# -ne 2 ]]; then
+if [[ $# -ne 1 ]]; then
     echo "Usage: $0 <path_to_netOSLab_image>"
     exit 1
 fi
